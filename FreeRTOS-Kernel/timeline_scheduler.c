@@ -578,17 +578,15 @@ BaseType_t xTimelineTickHandler( TickType_t xCurrentTick )
     }
 
     /* ------------------------------------------------------------------ */
-    /* 5. Update pxCurrentTCB to the highest priority ready task          */
+    /* 5. Signal whether a context switch is needed.                      */
     /*                                                                    */
-    /* We reuse the standard macro — our helpers have already placed the  */
-    /* correct task into the ready list at the right priority level, so   */
-    /* the priority scan will naturally select the task we want.          */
+    /* We do NOT call taskSELECT_HIGHEST_PRIORITY_TASK() here. On        */
+    /* Cortex-M, pxCurrentTCB must only be updated inside                */
+    /* vTaskSwitchContext(), which the port's PendSV handler calls        */
+    /* after xTaskIncrementTick() returns pdTRUE. Our job is only to     */
+    /* place the correct task in the ready list at the right priority     */
+    /* so vTaskSwitchContext() naturally selects it.                      */
     /* ------------------------------------------------------------------ */
-    if( xSwitchRequired == pdTRUE )
-    {
-        taskSELECT_HIGHEST_PRIORITY_TASK();
-    }
-
     return xSwitchRequired;
 }
 

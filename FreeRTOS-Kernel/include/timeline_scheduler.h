@@ -62,10 +62,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* =========================================================================
  * Constants
  * ========================================================================= */
@@ -257,9 +253,5 @@ typedef struct
  */
 BaseType_t xTimelineGetTaskState( UBaseType_t          uxIndex,
                                   TimelineTaskState_t * pxState );
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* TIMELINE_SCHEDULER_H */
